@@ -1,9 +1,11 @@
+'use client';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { poppins } from "@/styles/fonts";
 import Image from "next/image";
+import { useState } from "react";
 
 interface LoginFormValues {
     email: string;
@@ -12,7 +14,14 @@ interface LoginFormValues {
 
 function LoginForm() {
 
-    // const { register, handleSubmit } = useForm<LoginFormValues>();
+    const [formValues, setFormValues] = useState<LoginFormValues>({
+        email: "",
+        password: "",
+    });
+
+    const handleSubmit = () => {
+        console.log("Form submitted:", formValues);
+    };
 
     return (
         <div
@@ -50,6 +59,12 @@ function LoginForm() {
                       id="email"
                       type="email"
                       placeholder="Enter your email"
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, email: e.target.value })
+                      }
+                      value={formValues.email}
+                      required
+                      
                       className="mt-2 mb-4 border-white focus-visible:ring-cyan-100 placeholder:text-stone-200 placeholder:font-light text-purple-100"
                     />
                     <Label htmlFor="password" className="text-left text-gray-200"
@@ -61,9 +76,14 @@ function LoginForm() {
                       id="password"
                       type="password"
                       placeholder="Enter your password"
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, password: (e.target.value )})
+                      }
+                      value={formValues.password}
+                      required
                       className="mt-2 mb-4 border-white focus-visible:ring-cyan-100 placeholder:text-stone-200 placeholder:font-light text-purple-100"
                     />
-                    <Button className="w-full mt-4 cursor-pointer" variant={"secondary"}>
+                    <Button onClick={() => handleSubmit} className="w-full mt-4 cursor-pointer" variant={"secondary"}>
                       Sign In
                     </Button>
                     <p className="text-white mt-4 flex items-center justify-center gap-2">
